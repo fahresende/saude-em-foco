@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Saúde em Foco</title>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f6;--fg:#14212b;--card:#fff;--mut:#4a5b68;--bd:#c9d5dd;--ac:#0b6b7a;--acfg:#fff;--bad:#b3261e;--ok:#1b6e3c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f171d;--fg:#eaf1f5;--card:#18232b;--mut:#9fb2bf;--bd:#2f414d;--ac:#4cc3d6;--acfg:#04161a;--bad:#ff8a80;--ok:#7ddc9d}}
+:root[data-theme=dark]{--bg:#0f171d;--fg:#eaf1f5;--card:#18232b;--mut:#9fb2bf;--bd:#2f414d;--ac:#4cc3d6;--acfg:#04161a;--bad:#ff8a80;--ok:#7ddc9d}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:400 19px/1.45 "Atkinson Hyperlegible",system-ui,sans-serif;padding:0}
+h1{font-size:26px;margin:6px 0 10px}h2{font-size:22px;margin:4px 0 8px}h3{font-size:19px;margin:14px 0 6px}
+nav{display:flex;gap:8px;margin-bottom:14px}
+nav button{flex:1;padding:14px 6px;font:700 18px inherit;font-family:inherit;border:2px solid var(--ac);background:var(--card);color:var(--ac);border-radius:12px}
+nav button.on{background:var(--ac);color:var(--acfg)}
+.card,.dose{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.dose{display:grid;gap:4px}.big{font-size:23px;font-weight:700}.mut{color:var(--mut);font-size:17px}
+button{font:700 19px inherit;font-family:inherit;padding:14px 16px;border-radius:12px;border:2px solid var(--bd);background:var(--card);color:var(--fg);min-height:52px;cursor:pointer}
+button.pri{background:var(--ac);color:var(--acfg);border-color:var(--ac)}button.dan{border-color:var(--bad);color:var(--bad)}
+button.sm{min-height:40px;padding:6px 12px;font-size:17px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:4px solid var(--ac);outline-offset:2px}
+input,select{font:inherit;width:100%;padding:12px;border:2px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--fg);margin:4px 0 10px}
+input[type=checkbox]{width:24px;height:24px;margin:0 8px 0 0;vertical-align:middle}
+label{display:block;font-weight:700}label.ck{display:flex;align-items:center;font-weight:400;margin:6px 0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row>*{flex:1}.row .fit{flex:0 0 auto}
+.b{display:inline-block;padding:2px 10px;border-radius:99px;font-size:16px;font-weight:700;border:2px solid var(--bd);width:fit-content}
+.b.tomada{border-color:var(--ok);color:var(--ok)}.b.nao,.b.atrasada{border-color:var(--bad);color:var(--bad)}
+.sw{display:inline-block;width:18px;height:18px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+table{width:100%;border-collapse:collapse;font-size:17px}td,th{text-align:left;padding:8px 6px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.wrap{overflow-x:auto}img.ft{width:56px;height:56px;object-fit:cover;border-radius:8px}
+.warn{border-left:8px solid var(--bad)}
+#toast{position:fixed;left:14px;right:14px;top:calc(env(safe-area-inset-top,0px) + 10px);background:var(--fg);color:var(--bg);padding:14px;border-radius:12px;z-index:50;display:none;font-weight:700}
+#al{position:fixed;inset:0;z-index:40;display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:24px;gap:10px}
+#al .i{font-size:96px;line-height:1}#al .n{font-size:40px;font-weight:700}#al .t{font-size:24px;max-width:520px}
+#al button{width:100%;max-width:420px;font-size:26px;min-height:68px;background:#fff;color:#111;border-color:#111}
+@media(prefers-reduced-motion:no-preference){#al.on .i{animation:p 1s infinite}@keyframes p{50%{transform:scale(1.12)}}}
+[hidden]{display:none!important}
+.shell{max-width:760px;margin:0 auto;padding:12px 14px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}.top h1{margin:0}
+.wl{max-width:1040px;margin:0 auto;padding:0 20px}
+.hero{background:#0a3640;color:#eef7f9;padding:12px 0 64px}
+.hero .wl.g{display:grid;gap:40px}
+@media(min-width:860px){.hero .wl.g{grid-template-columns:1.1fr .9fr;align-items:center}}
+.bar{display:flex;justify-content:space-between;align-items:center;padding:14px 0 40px}
+.brand{font-weight:700;font-size:21px;display:flex;gap:10px;align-items:center}.brand i{width:16px;height:16px;border-radius:50%;background:#f9c80e}
+.hero h2{font-size:clamp(36px,6.2vw,60px);line-height:1.04;margin:0 0 18px;letter-spacing:-.01em}
+.hero p{font-size:21px;max-width:32em;color:#c4dde3;margin:0 0 26px}
+.hero .row>*{flex:0 0 auto}
+button.y{background:#f9c80e;color:#111;border-color:#f9c80e}button.o{background:transparent;color:#eef7f9;border-color:#7fb7c2}
+.blister{background:#e9f0f2;border-radius:26px;padding:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;box-shadow:0 0 0 7px #ffffff1f}
+.blister span{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-size:32px;color:#fff;box-shadow:inset 0 -7px 0 #0003}
+.cap{font-size:17px;color:#9cc4cd;margin-top:14px}
+@media(prefers-reduced-motion:no-preference){.blister span:nth-child(3){animation:pl 2.6s ease-in-out infinite}@keyframes pl{50%{transform:scale(1.1)}}}
+.sec{padding:60px 0}.sec h3.sh{font-size:clamp(26px,4vw,36px);margin:0 0 8px}.lead{color:var(--mut);max-width:38em;margin:0 0 28px;font-size:20px}
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{display:grid;grid-template-columns:54px 1fr;gap:14px;padding:20px 0;border-top:1px solid var(--bd)}
+.steps li::before{counter-increment:s;content:counter(s);font-size:42px;font-weight:700;color:var(--ac);line-height:1}
+.steps b{font-size:22px;display:block}.steps span{color:var(--mut)}
+.who{display:grid;gap:26px}@media(min-width:760px){.who{grid-template-columns:repeat(3,1fr)}}
+.who div{border-left:10px solid;padding:2px 0 2px 16px}.who b{font-size:22px;display:block;margin-bottom:4px}.who span{color:var(--mut)}
+.alt{background:var(--card);border-block:1px solid var(--bd)}
+.two{display:grid;gap:30px}@media(min-width:860px){.two{grid-template-columns:1fr 1fr}}
+.ul{list-style:none;padding:0;margin:0;display:grid;gap:14px}.ul li{padding-left:34px;position:relative}.ul li::before{content:'✓';position:absolute;left:0;color:var(--ok);font-weight:700;font-size:24px;line-height:1.1}
+.band{background:var(--ac);color:var(--acfg);padding:52px 0;text-align:left}.band h3{font-size:clamp(26px,4vw,36px);margin:0 0 16px}
+.band button{background:var(--acfg);color:var(--ac);border-color:var(--acfg)}
+footer{padding:30px 0 50px;color:var(--mut);font-size:17px}
+</style></head><body>
+<div id="toast" role="alert"></div>
+<div id="al" role="alertdialog" aria-live="assertive"></div>
+<input id="cam" type="file" accept="image/*" capture="environment" hidden>
+<div id="lp">
+<header class="hero"><div class="wl"><div class="bar"><div class="brand"><i></i>Saúde em Foco</div><button class="sm o" data-a="open">Abrir o app</button></div></div>
+<div class="wl"><svg viewBox="0 0 1000 280" role="img" aria-label="Cuidador abraçando uma idosa que segura o celular com o alarme, ao lado de uma cartela de remédios coloridos" style="width:100%;height:auto;display:block;border-radius:22px;margin-bottom:36px"><rect width="1000" height="280" fill="#12444f"/><circle cx="860" cy="90" r="64" fill="#f9c80e" opacity=".9"/><rect x="0" y="232" width="1000" height="48" fill="#0d343d"/><rect x="250" y="120" width="440" height="120" rx="34" fill="#1d6070"/><rect x="230" y="170" width="480" height="70" rx="26" fill="#247689"/><rect x="336" y="128" width="96" height="110" rx="42" fill="#d81b60"/><circle cx="384" cy="96" r="36" fill="#e8b894"/><path d="M348 98a36 36 0 0 1 72 0c-12-22-60-22-72 0z" fill="#e9eef0"/><circle cx="384" cy="58" r="15" fill="#e9eef0"/><circle cx="372" cy="100" r="8" fill="none" stroke="#333" stroke-width="3"/><circle cx="398" cy="100" r="8" fill="none" stroke="#333" stroke-width="3"/><path d="M374 118q10 8 20 0" fill="none" stroke="#8a4b3a" stroke-width="3" stroke-linecap="round"/><rect x="456" y="116" width="104" height="122" rx="46" fill="#1565c0"/><circle cx="508" cy="84" r="34" fill="#b97a57"/><path d="M474 82a34 34 0 0 1 68 0c-10-16-58-16-68 0z" fill="#2b2b2b"/><path d="M512 100q10 8 20 0" fill="none" stroke="#5a2d1f" stroke-width="3" stroke-linecap="round"/><path d="M476 146Q440 142 418 156" fill="none" stroke="#1565c0" stroke-width="30" stroke-linecap="round"/><rect x="398" y="176" width="32" height="52" rx="7" fill="#111"/><rect x="402" y="182" width="24" height="38" rx="4" fill="#2e7d32"/><path d="M408 202l6 6 10-12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="580" y="196" width="150" height="46" rx="12" fill="#e9f0f2"/><circle cx="608" cy="219" r="13" fill="#d32f2f"/><circle cx="643" cy="219" r="13" fill="#1565c0"/><circle cx="678" cy="219" r="13" fill="#2e7d32"/><circle cx="713" cy="219" r="13" fill="#f9c80e"/><circle cx="250" cy="60" r="26" fill="#2e7d32"/><path d="M238 60l9 9 16-18" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="wl g"><div><h2>Cada remédio na sua cor. Cada dose confirmada.</h2>
+<p>Um app de alarmes para idosos que tomam vários medicamentos por dia. A tela, a voz e o blister falam a mesma cor, e o cuidador é avisado quando uma dose fica sem confirmação.</p>
+<div class="row"><button class="y" data-a="open">Abrir o app</button><button class="o" data-a="open" data-k="f">Testar como farmacêutico</button></div></div>
+<div><div class="blister" aria-hidden="true"><span style="background:#d32f2f">●</span><span style="background:#1565c0">■</span><span style="background:#2e7d32">▲</span><span style="background:#f9c80e;color:#111">◆</span><span style="background:#ef6c00">★</span><span style="background:#6a1b9a">♥</span><span style="background:#d81b60">✚</span><span style="background:#6d4c41">⬟</span></div>
+<div class="cap">A etiqueta do blister tem a mesma cor, forma e nome que o alarme.</div></div></div></header>
+<section class="sec"><div class="wl"><h3 class="sh">Como funciona</h3><p class="lead">Do consultório à tomada do remédio, em quatro passos.</p>
+<ol class="steps"><li><div><b>O médico encaminha</b><span>Pacientes com 60 anos ou mais, doença crônica e 4 ou mais medicamentos por dia vão à farmácia após a consulta.</span></div></li>
+<li><div><b>A farmácia cadastra e etiqueta</b><span>O farmacêutico registra remédios e horários e cola em cada blister a etiqueta da cor do medicamento.</span></div></li>
+<li><div><b>O alarme chama na cor certa</b><span>No horário, o celular toca, vibra, fala o nome e a cor do remédio e pinta a tela com a cor do blister.</span></div></li>
+<li><div><b>A foto confirma a tomada</b><span>O alarme só para com a foto. Sem confirmação em 20 minutos, o cuidador recebe um aviso.</span></div></li></ol></div></section>
+<section class="sec alt"><div class="wl"><h3 class="sh">Um app, três papéis</h3><p class="lead">Cada pessoa vê só o que precisa.</p>
+<div class="who"><div style="border-color:#1565c0"><b>Idoso</b><span>Agenda do dia com letras grandes, alarme claro e um botão de check-in.</span></div>
+<div style="border-color:#2e7d32"><b>Cuidador</b><span>Recebe a notificação quando uma dose não é confirmada e marca como verificada.</span></div>
+<div style="border-color:#ef6c00"><b>Farmacêutico</b><span>Cadastra perfil, remédios e horários, acompanha o histórico e gera o relatório de adesão.</span></div></div></div></section>
+<section class="sec"><div class="wl two"><div><h3 class="sh">Feito para ser visto e ouvido</h3><p class="lead">A cor ajuda, mas nunca está sozinha: quem tem daltonismo ou baixa visão também reconhece o remédio.</p></div>
+<ul class="ul"><li>Nome, dose e orientação de uso em letras grandes e alto contraste</li><li>Ícone diferente para cada cor, além do aviso por voz</li><li>Som, vibração e repetição a cada 5 minutos, até 4 vezes</li><li>Histórico com foto de cada tomada e relatório de adesão</li><li>Dados de saúde tratados com consentimento, conforme a LGPD</li></ul></div></section>
+<section class="band"><div class="wl"><h3>Veja o alarme funcionando</h3><button data-a="open">Abrir o app</button></div></section>
+<footer><div class="wl">Protótipo acadêmico de Análise e Desenvolvimento de Sistemas, São Paulo, 2026. Equipe: Jhuan P., Arthur A., Eduardo O., Luan K., Fabricio R. e Mayara Z. Professor: Rafael.</div></footer>
+</div>
+<div id="shell" class="shell" hidden>
+<div class="top"><h1>Saúde em Foco</h1><button class="sm" data-a="home">Início</button></div>
+<nav id="nav"></nav>
+<main id="app"></main>
+</div>
+<script>
+const K='saudeemfoco1',$=id=>document.getElementById(id),pad=n=>String(n).padStart(2,'0');
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const COL={Vermelho:'#d32f2f',Azul:'#1565c0',Verde:'#2e7d32',Amarelo:'#f9c80e',Laranja:'#ef6c00',Roxo:'#6a1b9a',Rosa:'#d81b60',Marrom:'#6d4c41'};
+const ICO={Vermelho:'●',Azul:'■',Verde:'▲',Amarelo:'◆',Laranja:'★',Roxo:'♥',Rosa:'✚',Marrom:'⬟'};
+const LB={pend:'Pendente',alarme:'Pendente',tomada:'Tomada',atrasada:'Atrasada',nao:'Não confirmada'};
+const DIAS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const fgc=c=>c==='Amarelo'?'#111':'#fff';
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const ts=(d,t)=>new Date(d+'T'+t+':00').getTime();
+let S=load(),tab='i',ft='p',auth=false,editId=null,delId=null,hmf='',cur=null,pend=null,loop=null,ac;
+function load(){try{const x=JSON.parse(localStorage.getItem('saudeemfoco1'));if(x)return x}catch(e){}return{p:null,meds:[],d:{},n:[],demo:false}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+const INT=()=>S.demo?15000:300000;
+const ativo=m=>!m.fim||m.fim>=today();
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',3500)}
+function sched(date){const out=[],wd=new Date(date+'T12:00:00').getDay();
+ for(const m of S.meds){if(m.ini>date||(m.fim&&m.fim<date)||!m.dias.includes(wd))continue;
+  for(const t of m.hs)out.push({key:date+'|'+t+'|'+m.id,m:m.id,date,time:t,med:m})}
+ return out.sort((a,b)=>a.time.localeCompare(b.time))}
+/* ---------- alarme ---------- */
+function beep(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=880;g.gain.value=.3;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.4)}catch(e){}}
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='pt-BR';speechSynthesis.speak(u)}catch(e){}}
+function ring(s){cur=s.key;const m=s.med||{};
+ const al=$('al');al.className='on';al.style.display='flex';al.style.background=COL[s.cor];al.style.color=fgc(s.cor);
+ al.innerHTML=`<div class=i>${ICO[s.cor]}</div><div class=n>${esc(s.nome)}</div><div class=t>${esc(s.dose)} · cor ${s.cor}</div><div class=t>${esc(s.orient||'')}</div><div class=t>Aviso ${Math.min(s.reps,5)} de 5</div><button data-a=chk data-k="${s.key}">📷 Check-in (foto)</button><button data-a=snz>Adiar 5 minutos</button>`;
+ clearInterval(loop);beep();loop=setInterval(beep,1500);
+ try{navigator.vibrate&&navigator.vibrate([400,200,400])}catch(e){}
+ say('Hora de tomar '+s.nome+'. Cor '+s.cor+'. '+(s.orient||''))}
+function closeAl(){cur=null;clearInterval(loop);try{speechSynthesis.cancel()}catch(e){}const a=$('al');a.style.display='none';a.className=''}
+function notify(s){S.n.unshift({id:Date.now()+Math.random(),nome:s.nome,dose:s.dose,time:s.time,date:s.date,ok:false})}
+function tick(){const now=Date.now();let ch=false;
+ for(const x of sched(today())){const t=ts(x.date,x.time);if(t>now)continue;let s=S.d[x.key];
+  const m=x.med,snap={key:x.key,m:m.id,date:x.date,time:x.time,nome:m.nome,dose:m.dose,cor:m.cor,orient:m.orient,reps:0};
+  if(!s){if(now-t>25*60000){S.d[x.key]={...snap,st:'nao'};notify(snap);ch=true;continue}
+   s=S.d[x.key]={...snap,st:'alarme',next:now};ch=true}
+  if(s.st!=='alarme'||now<s.next)continue;
+  if(s.reps>=5){s.st='nao';notify(s);ch=true;if(cur===s.key)closeAl();continue}
+  if(cur&&cur!==s.key)continue;
+  s.reps++;s.next=now+(s.reps>=5?60000:INT());ch=true;ring(s)}
+ if(ch){save();if(tab!=='f')render()}}
+/* ---------- check-in ---------- */
+function thumb(f,cb){const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const c=document.createElement('canvas'),k=160/Math.max(i.width,i.height,160);c.width=i.width*k;c.height=i.height*k;c.getContext('2d').drawImage(i,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.6))};i.src=r.result};r.readAsDataURL(f)}
+$('cam').onchange=e=>{const f=e.target.files[0];if(!f||!pend)return;const k=pend;thumb(f,u=>done(k,u))};
+function done(k,foto){const s=S.d[k];if(!s)return;s.st=s.st==='alarme'?'tomada':'atrasada';s.foto=foto;s.at=Date.now();
+ const m=S.meds.find(x=>x.id===s.m);if(m&&m.est>0){m.est--;if(m.est<=5)toast('Estoque baixo: '+m.nome+' ('+m.est+')')}
+ if(cur===k)closeAl();pend=null;save();render()}
+/* ---------- views ---------- */
+function vI(){if(!S.p)return`<div class=card><h2>Nenhum perfil cadastrado</h2><p>Procure a farmácia para entrar no programa. Para testar, abra a aba Farmácia e use “Carregar exemplo”.</p></div>`;
+ const rows=sched(today()).map(x=>{const s=S.d[x.key],st=s?s.st:'pend',m=x.med;
+  return`<div class=dose style="border-left:14px solid ${COL[m.cor]}"><div class=big>${ICO[m.cor]} ${esc(m.nome)}</div><div>${esc(m.dose)} às ${x.time}, cor ${m.cor}</div><div class=mut>${esc(m.orient)}</div><span class="b ${st}">${LB[st]}</span>${s&&s.foto?`<img class=ft src="${s.foto}" alt="Foto da tomada">`:''}${s&&(st==='alarme'||st==='nao')?`<button class=pri data-a=chk data-k="${x.key}">📷 Fazer check-in</button>`:''}</div>`}).join('')||'<p>Sem doses hoje.</p>';
+ return`<div class=card><h2>Olá, ${esc(S.p.nome)}</h2><button class=pri data-a=ativ>🔔 Ativar alarmes e voz</button><p class=mut>${S.demo?'Modo demonstração: avisos a cada 15 segundos.':'Mantenha esta tela aberta para os alarmes tocarem.'}</p></div><h2>Agenda de hoje</h2>${rows}`}
+function vC(){if(!S.p||!S.p.cuid)return`<div class=card><h2>Sem cuidador vinculado</h2><p>A farmácia cadastra o cuidador no perfil do idoso.</p></div>`;
+ const n=S.n.map(x=>`<div class="card ${x.ok?'':'warn'}"><b>Dose não confirmada</b><div>${esc(x.nome)} (${esc(x.dose)}) às ${x.time} de ${x.date.split('-').reverse().join('/')}</div>${x.ok?'<span class="b tomada">Verificada</span>':`<button class=pri data-a=ver data-k="${x.id}">Marcar como verificada</button>`}</div>`).join('')||'<p>Nenhuma notificação. Você será avisado quando uma dose não for confirmada.</p>';
+ return`<div class=card><h2>Cuidador: ${esc(S.p.cuid)}</h2><p class=mut>Acompanhando ${esc(S.p.nome)}.</p></div>${n}`}
+function vF(){if(!auth)return`<div class=card><h2>Entrar como farmacêutico</h2><label>Usuário<input id=lu autocomplete=off></label><label>Senha<input id=ls type=password></label><button class=pri data-a=login>Entrar</button><p class=mut>Demonstração: usuário <b>farmaceutico</b>, senha <b>1234</b>.</p></div>`;
+ const T=[['p','Paciente'],['m','Remédios'],['h','Histórico'],['r','Relatório']];
+ const sub=`<div class=row style="margin-bottom:12px">${T.map(([k,l])=>`<button class="sm ${ft===k?'pri':''}" data-a=ft data-k=${k}>${l}</button>`).join('')}<button class="sm fit" data-a=out>Sair</button></div>`;
+ return sub+({p:fP,m:fM,h:fH,r:fR}[ft])()}
+function fP(){const p=S.p||{};return`<div class=card><h2>Perfil do idoso</h2>
+<label>Nome<input id=pn value="${esc(p.nome)}"></label><label>Idade<input id=pa type=number value="${p.idade||''}"></label>
+<label>Doenças crônicas<input id=pd value="${esc(p.doe)}"></label><label>Cuidador responsável<input id=pc value="${esc(p.cuid)}"></label>
+<label class=ck><input type=checkbox id=pm ${p.enc?'checked':''}>Encaminhado pelo médico</label>
+<label class=ck><input type=checkbox id=pk ${p.cons?'checked':''}>Paciente aceita o uso dos seus dados de saúde e fotos (LGPD)</label>
+<button class=pri data-a=savep>Salvar e ativar perfil</button>
+${S.p?`<p class=mut>${S.meds.length<4?'Atenção: o programa exige uso de 4 ou mais medicamentos por dia (RN09). Cadastrados: '+S.meds.length+'.':'Perfil ativo com '+S.meds.length+' medicamentos.'}</p>`:''}</div>
+<div class=card><h3>Demonstração</h3><div class=row><button data-a=demo>Carregar exemplo</button><button data-a=dm>${S.demo?'Desligar':'Ligar'} modo rápido (15 s)</button></div><button class=dan data-a=reset style="margin-top:8px">${delId==='all'?'Confirmar: apagar tudo':'Apagar todos os dados'}</button></div>`}
+function fM(){if(!S.p)return'<div class=card>Cadastre o perfil do idoso primeiro.</div>';
+ const e=S.meds.find(m=>m.id===editId)||{dias:[0,1,2,3,4,5,6],hs:[]};
+ const used=S.meds.filter(m=>ativo(m)&&m.id!==editId).map(m=>m.cor);
+ const low=S.meds.filter(m=>m.est!=null&&m.est<=5).map(m=>esc(m.nome)+' ('+m.est+')');
+ const list=S.meds.map(m=>`<tr><td><span class=sw style="background:${COL[m.cor]}"></span>${esc(m.nome)}<div class=mut>${esc(m.dose)} · ${m.hs.join(', ')}${m.est!=null?' · estoque '+m.est:''}</div></td><td class=fit><button class=sm data-a=ed data-k=${m.id}>Editar</button> <button class="sm dan" data-a=del data-k=${m.id}>${delId===m.id?'Confirmar':'Excluir'}</button></td></tr>`).join('');
+ return`${low.length?`<div class="card warn">Estoque baixo: ${low.join(', ')}</div>`:''}<div class=card><h2>${editId?'Editar':'Novo'} medicamento</h2>
+<label>Nome<input id=mn value="${esc(e.nome)}"></label><label>Dose<input id=md placeholder="ex.: 50 mg" value="${esc(e.dose)}"></label>
+<label>Forma farmacêutica<select id=mf>${['Comprimido','Cápsula','Gotas','Xarope','Injetável'].map(x=>`<option ${e.forma===x?'selected':''}>${x}</option>`).join('')}</select></label>
+<label>Via de administração<select id=mv>${['Oral','Sublingual','Subcutânea','Tópica'].map(x=>`<option ${e.via===x?'selected':''}>${x}</option>`).join('')}</select></label>
+<label>Orientações de uso<input id=mo placeholder="ex.: em jejum, após o almoço" value="${esc(e.orient)}"></label>
+<label>Cor da etiqueta do blister<select id=mc>${Object.keys(COL).map(c=>`<option ${used.includes(c)?'disabled':''} ${e.cor===c?'selected':''}>${c}</option>`).join('')}</select></label>
+<label>Horários (HH:MM, separados por vírgula)<input id=mh placeholder="08:00, 20:00" value="${e.hs.join(', ')}"></label>
+<label>Ou repetir a cada (horas), a partir do primeiro horário<input id=mi type=number min=0 placeholder="ex.: 8"></label>
+<label>Dias da semana</label><div class=row>${DIAS.map((d,i)=>`<label class=ck><input type=checkbox class=dd value=${i} ${e.dias.includes(i)?'checked':''}>${d}</label>`).join('')}</div>
+<div class=row><label>Início<input id=mI type=date value="${e.ini||today()}"></label><label>Fim (opcional)<input id=mF type=date value="${e.fim||''}"></label></div>
+<label>Estoque (unidades, opcional)<input id=me type=number min=0 value="${e.est??''}"></label>
+<div class=row><button class=pri data-a=savem>Salvar medicamento</button>${editId?'<button data-a=cancel>Cancelar</button>':''}</div></div>
+<div class=card><h3>Medicamentos cadastrados</h3><div class=wrap><table>${list||'<tr><td>Nenhum ainda.</td></tr>'}</table></div></div>`}
+function fH(){const L=Object.values(S.d).filter(x=>x.st!=='alarme'&&(!hmf||String(x.m)===hmf)).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
+ return`<div class=card><h2>Histórico de tomadas</h2><label>Medicamento<select id=hf data-c=hf><option value="">Todos</option>${S.meds.map(m=>`<option value=${m.id} ${hmf==String(m.id)?'selected':''}>${esc(m.nome)}</option>`).join('')}</select></label>
+<div class=wrap><table><tr><th>Data/hora</th><th>Medicamento</th><th>Status</th><th>Foto</th></tr>${L.map(x=>`<tr><td>${x.date.split('-').reverse().join('/')} ${x.time}${x.at?'<div class=mut>feita '+new Date(x.at).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</div>':''}</td><td>${esc(x.nome)}</td><td><span class="b ${x.st}">${LB[x.st]}</span></td><td>${x.foto?`<img class=ft src="${x.foto}" alt="Foto">`:'-'}</td></tr>`).join('')||'<tr><td colspan=4>Sem registros.</td></tr>'}</table></div></div>`}
+function fR(){const L=Object.values(S.d).filter(x=>x.st!=='alarme'),pc=(a,b)=>b?Math.round(100*a/b)+'%':'-';
+ const cnt=(l,k)=>l.filter(x=>x.st===k).length;
+ const row=(n,l)=>`<tr><td>${n}</td><td>${pc(cnt(l,'tomada'),l.length)}</td><td>${pc(cnt(l,'atrasada'),l.length)}</td><td>${pc(cnt(l,'nao'),l.length)}</td><td>${l.length}</td></tr>`;
+ return`<div class=card><h2>Relatório de adesão</h2><p class=mut>${S.p?esc(S.p.nome):''}. Para avaliação do médico e do farmacêutico.</p><div class=wrap><table><tr><th>Medicamento</th><th>No horário</th><th>Atrasadas</th><th>Não confirmadas</th><th>Doses</th></tr>${row('<b>Total</b>',L)}${S.meds.map(m=>row(esc(m.nome),L.filter(x=>x.m===m.id))).join('')}</table></div></div>`}
+function render(){$('nav').innerHTML=[['i','Idoso'],['c','Cuidador'],['f','Farmácia']].map(([k,l])=>`<button class="${tab===k?'on':''}" data-a=tab data-k=${k}>${l}${k==='c'&&S.n.some(x=>!x.ok)?' ●':''}</button>`).join('');
+ $('app').innerHTML=({i:vI,c:vC,f:vF})[tab]()}
+/* ---------- ações ---------- */
+function saveM(){const nome=$('mn').value.trim(),dose=$('md').value.trim();
+ let hs=$('mh').value.split(/[,;\s]+/).filter(x=>/^\d{1,2}:\d{2}$/.test(x)).map(x=>{const[a,b]=x.split(':');return pad(+a)+':'+b});
+ const iv=+$('mi').value;if(iv>0&&hs.length){const[a,b]=hs[0].split(':').map(Number);hs=[];for(let t=a*60+b;t<a*60+b+1440;t+=iv*60)hs.push(pad(Math.floor(t/60)%24)+':'+pad(t%60))}
+ hs=[...new Set(hs)].sort();
+ if(!nome||!dose||!hs.length)return toast('Informe nome, dose e ao menos um horário.');
+ const cor=$('mc').value;if(S.meds.some(m=>m.cor===cor&&m.id!==editId&&ativo(m)))return toast('Essa cor já está em uso. Escolha outra.');
+ const dias=[...document.querySelectorAll('.dd:checked')].map(x=>+x.value);if(!dias.length)return toast('Escolha ao menos um dia da semana.');
+ const m={id:editId||Date.now(),nome,dose,forma:$('mf').value,via:$('mv').value,orient:$('mo').value.trim(),cor,hs,dias,ini:$('mI').value||today(),fim:$('mF').value||'',est:$('me').value===''?null:+$('me').value};
+ if(editId)S.meds=S.meds.map(x=>x.id===editId?m:x);else S.meds.push(m);
+ editId=null;save();render();toast('Medicamento salvo.')}
+function demo(){const n=new Date(Date.now()+60000),h=pad(n.getHours())+':'+pad(n.getMinutes());const b=Date.now();
+ S.p={nome:'Maria Souza',idade:72,doe:'Hipertensão, diabetes',cuid:'Carlos (filho)',enc:true,cons:true,at:Date.now()};
+ const M=(i,nome,dose,orient,cor,hs,est)=>({id:b+i,nome,dose,forma:'Comprimido',via:'Oral',orient,cor,hs,dias:[0,1,2,3,4,5,6],ini:today(),fim:'',est});
+ S.meds=[M(1,'Losartana','50 mg','Tomar com água, em qualquer horário','Azul',[h,'20:00'],30),M(2,'Metformina','850 mg','Após o almoço','Verde',['12:30'],8),M(3,'Sinvastatina','20 mg','À noite, depois do jantar','Laranja',['21:00'],20),M(4,'AAS','100 mg','Após o café da manhã','Vermelho',['08:00'],25)];
+ S.d={};S.n=[];save();render();toast('Exemplo carregado: o primeiro alarme toca em cerca de 1 minuto. Ative o som na aba Idoso.')}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,k=el.dataset.k;
+ if(a==='open'){$('lp').hidden=true;$('shell').hidden=false;if(k)tab=k;render();scrollTo(0,0)}
+ else if(a==='home'){$('shell').hidden=true;$('lp').hidden=false;scrollTo(0,0)}
+ else if(a==='tab'){tab=k;render()}
+ else if(a==='ativ'){beep();say('Alarmes e voz ativados.');toast('Alarmes ativados.')}
+ else if(a==='chk'){pend=k;$('cam').value='';$('cam').click()}
+ else if(a==='snz'){closeAl();toast('Alarme adiado: toca de novo em 5 minutos.')}
+ else if(a==='ver'){const n=S.n.find(x=>String(x.id)===k);if(n)n.ok=true;save();render()}
+ else if(a==='login'){if($('lu').value.trim()==='farmaceutico'&&$('ls').value==='1234'){auth=true;render()}else toast('Usuário ou senha incorretos.')}
+ else if(a==='out'){auth=false;render()}
+ else if(a==='ft'){ft=k;editId=null;delId=null;render()}
+ else if(a==='savep'){const idade=+$('pa').value,nome=$('pn').value.trim(),doe=$('pd').value.trim();
+  if(!nome||!doe)return toast('Informe nome e doenças crônicas.');
+  if(idade<60)return toast('Só entram pacientes com 60 anos ou mais.');
+  if(!$('pm').checked)return toast('O paciente precisa de encaminhamento médico.');
+  if(!$('pk').checked)return toast('Sem consentimento o perfil não é ativado.');
+  S.p={nome,idade,doe,cuid:$('pc').value.trim(),enc:true,cons:true,at:S.p?.at||Date.now()};save();render();toast('Perfil ativo.')}
+ else if(a==='savem')saveM();
+ else if(a==='ed'){editId=+k;render()}else if(a==='cancel'){editId=null;render()}
+ else if(a==='del'){if(delId===+k){S.meds=S.meds.filter(m=>m.id!==+k);delId=null;save()}else delId=+k;render()}
+ else if(a==='demo')demo();
+ else if(a==='dm'){S.demo=!S.demo;save();render()}
+ else if(a==='reset'){if(delId==='all'){S={p:null,meds:[],d:{},n:[],demo:false};delId=null;save()}else delId='all';render()}});
+document.addEventListener('change',e=>{if(e.target.dataset.c==='hf'){hmf=e.target.value;render()}});
+render();tick();setInterval(tick,5000);
+</script></body></html>
